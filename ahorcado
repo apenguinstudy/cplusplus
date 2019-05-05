@@ -1,0 +1,135 @@
+#include<iostream>
+#include<cstdlib>
+#include<ctime>
+#include"windows.h"
+#include<cstring>
+using namespace std;
+
+
+int main(){
+    INICIO:
+    string palabra = " ";
+    string palabraMostrada = " ";
+    int vidas = 0;
+    int intentos = 0;
+    string letra = " ";
+    bool fin = false;
+    bool v = false;
+    int opcion;
+    
+    cout<<"Jugador Uno. \n";
+	string arr[5]={"un arbol","un juego","un barco","un album","un cofre"};
+	string arr2[5]={"una hora","una foto","una pala","una bala","una cara"};
+	
+	for(int i=0;i<5;i++)
+	{
+		cout<<i+1<<". "<<arr[i]<<endl;
+	}
+	for(int i=0;i<5;i++)
+	{
+		cout<<i+6<<". "<<arr2[i]<<endl;
+	}
+	
+	cout<<"Elija una opcion:";
+	cin>>opcion;
+	if(opcion<=5)
+	{
+	palabra= arr[opcion-1];
+    palabraMostrada = "__ _____";
+	}
+	if(opcion>5)
+	{
+	palabra= arr2[opcion-6];
+    palabraMostrada = "___ ____";
+	}
+	else
+	{
+	palabra=arr[0];
+	palabraMostrada = "__ _____";
+	}
+	
+    vidas = 4;
+    fin = false;
+    intentos=0;
+    system("cls");
+    
+    cout<<"Jugador 2. \n";
+       //<----------Muestra la palabra adivinar-------> 
+    cout<<"                 El Ahorcado"<<endl;
+    cout<<"     Intentos:"<<intentos<<"      Vidas: "<<vidas<<endl;
+    cout<<endl;
+    cout<<"palabra: "<<palabraMostrada<<endl;
+    cout<<endl;
+    
+    
+    ///* logica del juego *///
+    while (fin == false) {
+        LETRA:   												//definir letra por letra
+        cout<<"ingresa una letra: ";cin>>letra;cout<<endl;		//se ingresa una letra	
+        cout<<endl;
+        if (letra.size() == 0) { 
+            cout<<"ingresa una letra"<<endl;
+            goto LETRA;
+        } else
+        if (letra.size() == 1) { 								//para ingresar una sola letra
+            for (int i = 0; i < palabra.size(); i++){			//apuntador
+                if (letra[0] == palabra[i]) {			
+                    palabraMostrada[i] = palabra[i];			// verifica si esta en las palabras
+                    v = true;									//si esta es v
+                }
+            }
+            if (v == false){vidas--;}							// si no esta se resta una vida
+            intentos++;											//se aumenta los intentos
+            v = false;
+        } else {
+            cout<<"ingresa solo una letra"<<endl;				// no acepta mas de una letra
+            goto LETRA;											//Regresa A LETRA
+        }
+        
+    
+        if (vidas == 0){fin = true;} 							//si tus vidas se acaban
+        letra = " ";
+        system("cls");
+        cout<<"                 El Ahorcado"<<endl;
+        cout<<"     Intentos:"<<intentos<<"      Vidas: "<<vidas<<endl;
+        cout<<endl;
+        cout<<"palabra: "<<palabraMostrada<<endl;
+        cout<<endl;
+
+        if (palabraMostrada == palabra){                        // si ganas
+            system("cls");
+            cout<<"           El Ahorcado"<<endl;
+            cout<<"     Intentos:"<<intentos<<"      Vidas: "<<vidas<<endl;
+            cout<<"         Palabra: "<<palabra<<endl;
+            cout<<endl;
+            cout<<"            HAZ GANADO!"<<endl;
+            cout<<endl;
+            Sleep(3000);
+            system("cls");
+            cout<<endl;
+            cout<<"                 Intentalo nuevamente"<<endl;
+            Sleep(1000);
+            system("cls");
+            goto INICIO;
+        }
+
+        if (fin == true) { 										//si perdes
+            system("cls");
+            cout<<"             El Ahorcado"<<endl;
+            cout<<"     Intentos:"<<intentos<<"      Vidas: "<<vidas<<endl;
+            cout<<endl;
+            cout<<"              Has perdido"<<endl;
+            cout<<endl;
+            Sleep(2000);
+            system("cls");
+            cout<<"Intentalo nuevamente"<<endl;
+            Sleep(1000);
+            system("cls");
+            goto INICIO;
+        }
+    }
+
+    return 0;
+    
+    
+}
